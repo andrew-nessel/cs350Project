@@ -2,7 +2,7 @@ package cs350Project;
 
 import java.util.ArrayList;
 
-public class Survey {
+public abstract class Survey {
 	
 	private ArrayList<Question> questions;
 	private String surveyName;
