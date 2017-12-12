@@ -1,38 +1,27 @@
 package cs350Project;
 
-import java.util.ArrayList;
-
 public class ShortAnswerQuestion extends Question {
-
-	private IOHandler handler;
 
 	public ShortAnswerQuestion(String questionWording){
 		
-		this.questionWording = questionWording;
-		
-		handler = new IOHandler();
+		super();
 	}
 	
-	public String getWording() {
+	public void build(IOHandler handler) {
 		
-		return questionWording;
+		questionWording = handler.getStringInput("Please input the wording for this short answer question: ");		
 	}
 	
-	public ArrayList<String> getAnswers(){
+	public void display(IOHandler handler) {
 		
-		handler.print("A short answer does not has answer options. Something went wrong");
-		
-		return null;
+		handler.print(questionWording);
+		handler.printNewLine();
 	}
 	
-	public void addAnswer(String answer) {
+	public void answer(IOHandler handler) { //Not Finished
 		
-		handler.print("You can't add answer options to an short answer question. Something went wrong");
-	}
-	
-	public boolean hasAnswers() {
-		
-		return hasAnswers;
+		display(handler);
+		handler.getStringInput("Answer: ");
 	}
 	
 }

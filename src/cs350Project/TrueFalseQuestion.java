@@ -1,38 +1,33 @@
 package cs350Project;
 
-import java.util.ArrayList;
-
 public class TrueFalseQuestion extends Question {
-
-	private IOHandler handler;
 
 	public TrueFalseQuestion(String questionWording){
 		
-		this.questionWording = questionWording;
-		this.answerOptions.add("False");
-		this.answerOptions.add("True");
-		
-		handler = new IOHandler();
+		super();
 	}
 	
-	public String getWording() {
+	public void build(IOHandler handler) {
 		
-		return questionWording;
+		questionWording = handler.getStringInput("Please input the wording for this true/false question: ");
+		answerOptions.add("True");
+		answerOptions.add("False");
 	}
 	
-	public ArrayList<String> getAnswers(){
+	public void display(IOHandler handler) {
 		
-		return answerOptions;
+		handler.print(questionWording);
+		handler.printNewLine();
+		
+		for(int x = 0; x < answerOptions.size(); x++) {
+			handler.print(x+1 + ": " + answerOptions.get(x));
+			handler.printNewLine();
+		}
+		
 	}
 	
-	public void addAnswer(String answer) {
+	public void answer(IOHandler handler) { //Not Finished
 		
-		handler.print("You can't add answer options to an true-false question. Something went wrong");
-	}
-	
-	public boolean hasAnswers() {
-		
-		return hasAnswers;
 	}
 	
 }

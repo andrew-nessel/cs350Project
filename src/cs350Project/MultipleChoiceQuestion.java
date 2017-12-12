@@ -1,33 +1,57 @@
 package cs350Project;
 
-import java.util.ArrayList;
-
 public class MultipleChoiceQuestion extends Question {
+	
+	public MultipleChoiceQuestion(){
+		
+		super();
+	}
+	
+	public void build(IOHandler handler) {
+		
+		questionWording = handler.getStringInput("Please input the wording for this multiple choice question: ");
+		
+		boolean moreAnswers = true;
+		while(moreAnswers) {
+			
+			answerOptions.add(handler.getStringInput("Please enter an answer: "));
+			handler.printNewLine();
+			
+			boolean valid = true;
+			while(!valid) {
 
-	
-	public MultipleChoiceQuestion(String questionWording){
+				int more = handler.getIntInput("Would you like to add another answer to this question? \n 1: Yes \n 2: No \n : ");
+				handler.printNewLine();
+				if(more == 1) {
+					moreAnswers = true;
+					valid = true;
+				}else if (more == 2) {
+					moreAnswers = false;
+					valid = true;
+				}else {
+					valid = false;
+					handler.print("Please only answer either 1 or 2");
+					handler.printNewLine();
+				}
+			}
+		}
 		
-		this.questionWording = questionWording;
 	}
 	
-	public String getWording() {
+	public void display(IOHandler handler) {
 		
-		return questionWording;
+		handler.print(questionWording);
+		handler.printNewLine();
+		
+		for(int x = 0; x < answerOptions.size(); x++) {
+			handler.print(x+1 + ": " + answerOptions.get(x));
+			handler.printNewLine();
+		}
+		
 	}
 	
-	public ArrayList<String> getAnswers(){
+	public void answer(IOHandler handler) { //Not Finished
 		
-		return answerOptions;
-	}
-	
-	public void addAnswer(String answer) {
-		
-		answerOptions.add(answer);
-	}
-	
-	public boolean hasAnswers() {
-		
-		return hasAnswers;
 	}
 	
 }

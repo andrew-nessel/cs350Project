@@ -1,39 +1,27 @@
 package cs350Project;
 
-import java.util.ArrayList;
-
 public class EssayQuestion extends Question {
 	
-	private IOHandler handler;
-
-	public EssayQuestion(String questionWording){
+	public EssayQuestion(){
 		
-		this.questionWording = questionWording;
-		
-		handler = new IOHandler();
+		super();
 	}
 	
-	public String getWording() {
+	public void build(IOHandler handler) {
 		
-		return questionWording;
+		questionWording = handler.getStringInput("Please input the wording for this essay question: ");		
 	}
 	
-	public ArrayList<String> getAnswers(){
+	public void display(IOHandler handler) {
 		
-		handler.print("An essay does not has answer options. Something went wrong");
-		
-		return null;
+		handler.print(questionWording);
+		handler.printNewLine();
 	}
 	
-	public void addAnswer(String answer) {
+	public void answer(IOHandler handler) { //Not Finished
 		
-		handler.print("You can't add answer options to an essay. Something went wrong");
+		display(handler);
+		handler.getStringInput("Answer: ");
 	}
-	
-	public boolean hasAnswers() {
-		
-		return hasAnswers;
-	}
-	
 	
 }

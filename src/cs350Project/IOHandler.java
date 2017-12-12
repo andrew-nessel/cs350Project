@@ -3,23 +3,36 @@ package cs350Project;
 import java.util.Scanner;
 
 public class IOHandler {
+	
+	Scanner reader;
 
 	public IOHandler(){
-		
+		reader = new Scanner(System.in);
+	}
+	
+	public void finalize() {
+		print("Please call close, this could cause problems");
+		close();
+	}
+	
+	public void close() {
+		reader.close();
 	}
 	
 	public void print(String str) {
+		
 		System.out.print(str);
+	}
+	
+	public void printNewLine() {
+		
+		System.out.println();
 	}
 	
 	public String getStringInput(String str) {
 		
 		print(str);
-		
-		Scanner reader = new Scanner(System.in);
 		String input = reader.nextLine();
-		reader.close();
-		
 		
 		return input;
 	}
@@ -31,17 +44,13 @@ public class IOHandler {
 		boolean gotResult = false;
 		int result = -1;
 		
-		
 		while(!gotResult) {
 			try {
-		
-				Scanner reader = new Scanner(System.in);
-				result = reader.nextInt();
-				reader.close();
 				
+				result = Integer.parseInt(getStringInput(""));  				
 				gotResult = true;
-		
 			}catch(Exception e) {
+				
 				gotResult = false;
 				print("Please input just a number. Please try again: ");
 			}
@@ -49,4 +58,5 @@ public class IOHandler {
 		
 		return result;
 	}
+	
 }
