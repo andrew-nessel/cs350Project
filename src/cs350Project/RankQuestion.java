@@ -2,7 +2,7 @@ package cs350Project;
 
 public class RankQuestion extends Question {
 	
-	public RankQuestion(String questionWording){
+	public RankQuestion(){
 		
 		super();
 	}
@@ -10,6 +10,7 @@ public class RankQuestion extends Question {
 	public void build(IOHandler handler) {
 		
 		questionWording = handler.getStringInput("Please input the wording for this ranking question: ");
+		handler.printNewLine();
 		
 		boolean moreAnswers = true;
 		while(moreAnswers) {
@@ -17,10 +18,10 @@ public class RankQuestion extends Question {
 			answerOptions.add(handler.getStringInput("Please enter an answer: "));
 			handler.printNewLine();
 			
-			boolean valid = true;
+			boolean valid = false;
 			while(!valid) {
 
-				int more = handler.getIntInput("Would you like to add another answer to this question? \n 1: Yes \n 2: No \n : ");
+				int more = handler.getIntInput("Would you like to add another answer to this question? \n 1: Yes \n 2: No");
 				handler.printNewLine();
 				if(more == 1) {
 					moreAnswers = true;
@@ -44,14 +45,53 @@ public class RankQuestion extends Question {
 		handler.printNewLine();
 		
 		for(int x = 0; x < answerOptions.size(); x++) {
-			handler.print(x+1 + ": " + answerOptions.get(x));
+			handler.print(x+1 + ". " + answerOptions.get(x));
 			handler.printNewLine();
 		}
 		
 	}
 	
-	public void answer(IOHandler handler) { //Not Finished
+	public String answer(IOHandler handler) {
 		
+		display(handler);
+		String answer = "";
+		int size = answerOptions.size();
+		
+		for(int x = 0; x<size; x++){
+			
+			boolean valid = false;
+			while(!valid) {
+				String tempanswer = handler.getStringInput("Rank " + x+1);
+				if(validateAnswer(answer)) {
+					answer+=tempanswer + ",";
+					valid = true;
+				}else {
+					handler.print("Answer not valid, please only input the letter (ex. a) . Please try again");
+				}
+			}			
+		}
+		
+		answer = answer.substring(0,answer.length()-1); //cut off the last comma
+		
+		return answer;
+	}
+	
+	public boolean hasCorrectAnswer() {
+		return true;
+	}
+	
+	public boolean validateAnswer(String answer) {
+		
+		String[] list = answer.split(",");
+		int size = answerOptions.size();
+			
+		for(String input : list) {
+			if((letterToInt(input)<0) || (letterToInt(input)>=size)) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 }

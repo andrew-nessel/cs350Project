@@ -2,7 +2,7 @@ package cs350Project;
 
 public class ShortAnswerQuestion extends Question {
 
-	public ShortAnswerQuestion(String questionWording){
+	public ShortAnswerQuestion(){
 		
 		super();
 	}
@@ -18,10 +18,19 @@ public class ShortAnswerQuestion extends Question {
 		handler.printNewLine();
 	}
 	
-	public void answer(IOHandler handler) { //Not Finished
+	public String answer(IOHandler handler) {
 		
 		display(handler);
-		handler.getStringInput("Answer: ");
+		return handler.getStringInput("");
+	}
+	
+	public boolean validateAnswer(String answer) {
+		
+		return true;
+	}
+	
+	public boolean hasCorrectAnswer() {
+		return true;
 	}
 	
 }

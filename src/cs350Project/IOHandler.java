@@ -26,15 +26,23 @@ public class IOHandler {
 	
 	public void printNewLine() {
 		
-		System.out.println();
+		printNewLines(1);
+	}
+	
+	public void printNewLines(int num) {
+		
+		for(int i = 0; i < num; i++) {
+			
+			System.out.println();			
+		}
 	}
 	
 	public String getStringInput(String str) {
 		
-		print(str);
+		print(str + "\n:");
 		String input = reader.nextLine();
 		
-		return input;
+		return input.trim();
 	}
 	
 	public int getIntInput(String str) {
@@ -50,13 +58,15 @@ public class IOHandler {
 				result = Integer.parseInt(getStringInput(""));  				
 				gotResult = true;
 			}catch(Exception e) {
-				
+				printNewLine();
 				gotResult = false;
-				print("Please input just a number. Please try again: ");
+				print("Please input just a number. Please try again");
 			}
 		}
 		
 		return result;
 	}
+	
+	//public boolean continue
 	
 }

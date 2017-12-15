@@ -11,7 +11,7 @@ public class MatchQuestion extends Question { //NOT FINISHED
 		answerOptionsColumn2 = new ArrayList<String>();
 	}
 	
-	public void build(IOHandler handler) { //Not Finished
+	public void build(IOHandler handler) { 
 		
 		questionWording = handler.getStringInput("Please input the wording for this matching question: ");	
 		
@@ -21,7 +21,7 @@ public class MatchQuestion extends Question { //NOT FINISHED
 			answerOptions.add(handler.getStringInput("Please enter an answer in the first column: "));
 			handler.printNewLine();
 			
-			boolean valid = true;
+			boolean valid = false;
 			while(!valid) {
 
 				int more = handler.getIntInput("Would you like to add another answer to the first column of this question? \n 1: Yes \n 2: No \n : ");
@@ -71,15 +71,69 @@ public class MatchQuestion extends Question { //NOT FINISHED
 		
 		handler.print(questionWording);
 		handler.printNewLine();
+		int c1size = answerOptions.size();
 		
 		for(int x = 0; x < answerOptions.size(); x++) {
-			handler.print(x+1 + ": " + answerOptions.get(x) + "\t" + answerOptionsColumn2.get(x));
+			handler.print(intToLetter(x+1) + ". " + answerOptions.get(x) + "\t" + intToLetter(x+c1size) + ". " + answerOptionsColumn2.get(x));
 			handler.printNewLine();
 		}
 	}
 	
-	public void answer(IOHandler handler) { //Not Finished
+	public String answer(IOHandler handler) {
 		
+		display(handler);
+		String answer = "";
+		int c1size = answerOptions.size();		
+		
+		for(int x = 0; x<c1size; x++) {
+
+			boolean valid = false;
+			while(!valid) {
+				String tempanswer1 = intToLetter(x);
+				String tempanswer2 = handler.getStringInput(tempanswer1 + " matches with");
+				
+				if(validateAnswer(answer)) {
+					answer+=tempanswer1 + " " + tempanswer2 + ",";
+					valid = true;
+				}else {
+					handler.print("Answer not valid, please only input the letter (ex. a) . Please try again");
+				}
+			}
+			
+		}
+		
+		answer = answer.substring(0,answer.length()-1); //cut off the last comma
+		
+		return answer;
+	}
+
+	public boolean hasCorrectAnswer() {
+		return true;
+	}
+	
+	public boolean validateAnswer(String answer) {
+		
+		String[] list = answer.split(",");
+		int c1size = answerOptions.size();
+		int c2size = answerOptionsColumn2.size();
+			
+		for(String input : list) {
+			String[] column = input.split(" ");
+			
+			if(column.length != 2) {
+				return false;
+			}
+			
+			if((letterToInt(column[0])<0) || (letterToInt(column[0])>=c1size)) {
+				return false;
+			}
+			
+			if((letterToInt(column[1])<c1size) || (letterToInt(column[1])>=c2size+c1size)) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 }
