@@ -1,11 +1,21 @@
 package cs350Project;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class Driver {
 	
 	public static final IOHandler handle = new IOHandler();
 	public static Survey survey = null;
+	public static Context context = null;
 
 	public static void main(String[] args) {
+		
+		initialize();
 		
 		boolean running = true;
 		
@@ -34,6 +44,7 @@ public class Driver {
 		}
 		
 		handle.close();
+		finish();
 
 	}
 	
@@ -75,11 +86,11 @@ public class Driver {
 					break;
 		
 				case 3:
-					//this is loading a survey
+					loadSurvey();
 					break;
 				
 				case 4:
-					//this is saving the survey
+					saveSurvey();
 					break;
 			
 				case 5:
@@ -134,11 +145,11 @@ public class Driver {
 					break;
 		
 				case 3:
-					//this is loading a test
+					loadTest();
 					break;
 				
 				case 4:
-					//this is saving the test
+					saveTest();
 					break;
 			
 				case 5:
@@ -155,5 +166,156 @@ public class Driver {
 		
 		handle.printNewLine();
 	}
+	
+	public static void loadSurvey() {
 
+        boolean valid = false;
+        
+        if(context.getSurveyList().isEmpty()) {
+        	handle.print("You don't have any surveys to load");
+        	return;
+        }
+        
+        handle.print("Surveys found:");
+        for(String surveyName : context.getSurveyList()) {
+        	handle.print(surveyName);
+        	handle.printNewLine();
+        }
+        handle.printNewLine();
+        
+		String filename = handle.getStringInput("Please input the name of the survey you would like to load");
+        
+        while(!valid) {
+        	try {
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
+                survey = (Survey) in.readObject();
+                in.close();
+    			valid = true;
+    		} catch (FileNotFoundException e1) {
+    			handle.getStringInput("File not found, please try again");
+    		} catch (IOException e1) {
+    			handle.getStringInput("Something went wrong (IOException), please try again");
+    			return;
+    		} catch (ClassNotFoundException e) {
+    			handle.getStringInput("Something went wrong (ClassNotFound), please try again");
+    			return;
+			}
+        }
+	}
+	
+	public static void saveSurvey() {
+		
+        boolean valid = false;
+        
+        if(survey == null) {
+        	handle.print("No Survey to save, either load or create one to save");
+        	return;
+        }
+        
+        while(!valid) {
+        	try {
+                ObjectOutputStream oos;
+    			oos = new ObjectOutputStream(new FileOutputStream(survey.getName()));
+    			oos.writeObject( survey );
+    			oos.close();
+    			context.addSurvey(survey.getName());
+    			valid = true;
+    		} catch (IOException e1) {
+    			handle.getStringInput("Something went wrong (IOException), please try again");
+    			return;
+    		}
+        }
+	}
+	
+	public static void loadTest() {
+
+        boolean valid = false;
+        
+        if(context.getTestList().isEmpty()) {
+        	handle.print("You don't have any tests to load");
+        	return;
+        }
+        
+        handle.print("Tests found:");
+        handle.printNewLine();
+        for(String surveyName : context.getTestList()) {
+        	handle.print(surveyName);
+        	handle.printNewLine();
+        }
+        handle.printNewLine();
+        
+		String filename = handle.getStringInput("Please input the name of the test you would like to load");
+        
+        while(!valid) {
+        	try {
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
+                survey = (TestSurvey) in.readObject();
+                in.close();
+    			valid = true;
+    		} catch (FileNotFoundException e1) {
+    			handle.getStringInput("File not found, please try again");
+    		} catch (IOException e1) {
+    			handle.getStringInput("Something went wrong (IOException), please try again");
+    			return;
+    		} catch (ClassNotFoundException e) {
+    			handle.getStringInput("Something went wrong (ClassNotFound), please try again");
+    			return;
+			}
+        }
+	}
+	
+	public static void saveTest() {
+		
+        boolean valid = false;
+        
+        if(survey == null) {
+        	handle.print("No test to save, either load or create one to save");
+        	return;
+        }
+        
+        while(!valid) {
+        	try {
+                ObjectOutputStream oos;
+    			oos = new ObjectOutputStream(new FileOutputStream(survey.getName()));
+    			oos.writeObject( survey );
+    			oos.close();
+    			context.addSurvey(survey.getName());
+    			valid = true;
+    		} catch (IOException e1) {
+    			handle.getStringInput("Something went wrong (IOException), please try again");
+    			return;
+    		}
+        }
+	}
+	
+	public static void initialize() {
+		
+		Context instance = new Context();
+        
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("context"));
+            instance = (Context) in.readObject();
+            in.close();
+    	} catch (FileNotFoundException e1) {
+    			//There is no context (first launch) so we'll just use the new instance
+    	} catch (IOException e1) {
+    			handle.getStringInput("Something went wrong initializing (IOException)");
+    	} catch (ClassNotFoundException e) {
+    			handle.getStringInput("Something went wrong initializing (ClassNotFound)");
+		}
+        context = instance;
+	}
+	
+	public static void finish() {
+		ObjectOutputStream oos;
+        try {
+    		oos = new ObjectOutputStream(new FileOutputStream("context"));
+    		oos.writeObject( context );
+    		oos.close();
+    	} catch (IOException e1) {
+    		handle.getStringInput("Something went wrong finishing (IOException)");
+    		return;
+    	}
+    }
 }
+

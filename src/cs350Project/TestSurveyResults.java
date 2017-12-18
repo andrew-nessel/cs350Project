@@ -1,6 +1,8 @@
 package cs350Project;
 
-public class TestSurveyResults extends SurveyResults {
+import java.io.Serializable;
+
+public class TestSurveyResults extends SurveyResults implements Serializable {
 
 	TestSurveyResults(){
 		super();

@@ -1,8 +1,9 @@
 package cs350Project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MatchQuestion extends Question { //NOT FINISHED
+public class MatchQuestion extends Question implements Serializable{ 
 
 	private ArrayList<String> answerOptionsColumn2;
 	
@@ -46,7 +47,7 @@ public class MatchQuestion extends Question { //NOT FINISHED
 			answerOptionsColumn2.add(handler.getStringInput("Please enter an answer in the second column: "));
 			handler.printNewLine();
 			
-			boolean valid = true;
+			boolean valid = false;
 			while(!valid) {
 
 				int more = handler.getIntInput("Would you like to add another answer to the second column of this question? \n 1: Yes \n 2: No \n : ");
@@ -74,7 +75,7 @@ public class MatchQuestion extends Question { //NOT FINISHED
 		int c1size = answerOptions.size();
 		
 		for(int x = 0; x < answerOptions.size(); x++) {
-			handler.print(intToLetter(x+1) + ". " + answerOptions.get(x) + "\t" + intToLetter(x+c1size) + ". " + answerOptionsColumn2.get(x));
+			handler.print(intToLetter(x) + ". " + answerOptions.get(x) + "\t" + intToLetter(x+c1size-1) + ". " + answerOptionsColumn2.get(x));
 			handler.printNewLine();
 		}
 	}
@@ -91,9 +92,9 @@ public class MatchQuestion extends Question { //NOT FINISHED
 			while(!valid) {
 				String tempanswer1 = intToLetter(x);
 				String tempanswer2 = handler.getStringInput(tempanswer1 + " matches with");
+				answer+=tempanswer1 + " " + tempanswer2 + ",";
 				
 				if(validateAnswer(answer)) {
-					answer+=tempanswer1 + " " + tempanswer2 + ",";
 					valid = true;
 				}else {
 					handler.print("Answer not valid, please only input the letter (ex. a) . Please try again");

@@ -1,8 +1,9 @@
 package cs350Project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Survey {
+public class Survey implements Serializable{
 	
 	protected ArrayList<Question> questions;
 	protected String surveyName;
@@ -105,7 +106,7 @@ public class Survey {
 				case 5:
 					question = new RankQuestion();
 					question.build(handler);
-					valid = false;
+					valid = true;
 					break;
 			
 				case 6:

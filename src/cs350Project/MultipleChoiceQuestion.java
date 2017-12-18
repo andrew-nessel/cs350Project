@@ -1,6 +1,8 @@
 package cs350Project;
 
-public class MultipleChoiceQuestion extends Question {
+import java.io.Serializable;
+
+public class MultipleChoiceQuestion extends Question implements Serializable{
 	
 	public MultipleChoiceQuestion(){
 		
@@ -45,7 +47,7 @@ public class MultipleChoiceQuestion extends Question {
 		handler.printNewLine();
 		
 		for(int x = 0; x < answerOptions.size(); x++) {
-			handler.print(intToLetter(x+1) + ". " + answerOptions.get(x));
+			handler.print(intToLetter(x) + ". " + answerOptions.get(x));
 			handler.printNewLine();
 		}
 		
@@ -61,8 +63,8 @@ public class MultipleChoiceQuestion extends Question {
 			
 			boolean valid = false;
 			while(!valid) {
-				String tempanswer = handler.getStringInput("");
-				if(validateAnswer(answer)) {
+				String tempanswer = answer + handler.getStringInput("");
+				if(validateAnswer(tempanswer)) {
 					answer+=tempanswer + ",";
 					valid = true;
 				}else {

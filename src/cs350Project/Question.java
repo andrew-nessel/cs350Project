@@ -1,8 +1,9 @@
 package cs350Project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Question {
+public abstract class Question implements Serializable {
 
 		protected String questionWording;
 		protected ArrayList<String> answerOptions;
@@ -20,63 +21,63 @@ public abstract class Question {
 		public abstract boolean hasCorrectAnswer();
 		
 		
-		public String intToLetter(int i) { //inb4 realizing I could've used unicode
+	public String intToLetter(int i) { //inb4 realizing I could've used unicode
 			switch(i) {
 			
-			case 1:
+			case 0:
 				return "A";
-			case 2:
+			case 1:
 				return "B";
-			case 3:
+			case 2:
 				return "C";
-			case 4:
+			case 3:
 				return "D";
-			case 5:
+			case 4:
 				return "E";
-			case 6:
+			case 5:
 				return "F";
-			case 7:
+			case 6:
 				return "G";
-			case 8:
+			case 7:
 				return "H";
-			case 9:
+			case 8:
 				return "I";
-			case 10:
+			case 9:
 				return "J";
-			case 11:
+			case 10:
 				return "K";
-			case 12:
+			case 11:
 				return "L";
-			case 13:
+			case 12:
 				return "M";
-			case 14:
+			case 13:
 				return "N";
-			case 15:
+			case 14:
 				return "O";
-			case 16:
+			case 15:
 				return "P";
-			case 17:
+			case 16:
 				return "Q";
-			case 18:
+			case 17:
 				return "R";
-			case 19:
+			case 18:
 				return "S";
-			case 20:
+			case 19:
 				return "T";
-			case 21:
+			case 20:
 				return "U";
-			case 22:
+			case 21:
 				return "V";
-			case 23:
+			case 22:
 				return "W";
-			case 24:
+			case 23:
 				return "X";
-			case 25:
+			case 24:
 				return "Y";
-			case 26:
+			case 25:
 				return "Z";				
 			default:
-				if(i>26) {
+				if(i>25) {
 					int prefix = i/26;
 					int suffix = i%26;
 					return intToLetter(prefix) + intToLetter(suffix);
@@ -86,7 +87,7 @@ public abstract class Question {
 			}
 		}
 		
-		public static int letterToInt(String str) {//return the conversion of a letter to a number A->0, B->1, AA->27, (learned my lesson and used unicode)
+		public int letterToInt(String str) {//return the conversion of a letter to a number A->0, B->1, AA->27, (learned my lesson and used unicode)
 			int num = -1;
 			int ten = 0;
 			String i = str.toLowerCase();

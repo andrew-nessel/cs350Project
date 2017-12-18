@@ -1,6 +1,8 @@
 package cs350Project;
 
-public class ShortAnswerQuestion extends Question {
+import java.io.Serializable;
+
+public class ShortAnswerQuestion extends Question implements Serializable{
 
 	public ShortAnswerQuestion(){
 		

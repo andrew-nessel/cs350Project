@@ -1,6 +1,8 @@
 package cs350Project;
 
-public class TrueFalseQuestion extends Question {
+import java.io.Serializable;
+
+public class TrueFalseQuestion extends Question implements Serializable{
 
 	public TrueFalseQuestion() {
 		super();
@@ -19,7 +21,7 @@ public class TrueFalseQuestion extends Question {
 		handler.printNewLine();
 		
 		for(int x = 0; x < answerOptions.size(); x++) {
-			handler.print(x+1 + ": " + answerOptions.get(x));
+			handler.print(answerOptions.get(x).substring(0,1) + ": " + answerOptions.get(x));
 			handler.printNewLine();
 		}
 		

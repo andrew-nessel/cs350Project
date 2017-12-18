@@ -1,6 +1,8 @@
 package cs350Project;
 
-public class RankQuestion extends Question {
+import java.io.Serializable;
+
+public class RankQuestion extends Question implements Serializable{
 	
 	public RankQuestion(){
 		
@@ -45,7 +47,7 @@ public class RankQuestion extends Question {
 		handler.printNewLine();
 		
 		for(int x = 0; x < answerOptions.size(); x++) {
-			handler.print(x+1 + ". " + answerOptions.get(x));
+			handler.print(intToLetter(x) + ". " + answerOptions.get(x));
 			handler.printNewLine();
 		}
 		
@@ -61,7 +63,7 @@ public class RankQuestion extends Question {
 			
 			boolean valid = false;
 			while(!valid) {
-				String tempanswer = handler.getStringInput("Rank " + x+1);
+				String tempanswer = answer + handler.getStringInput("Rank " + x+1);
 				if(validateAnswer(answer)) {
 					answer+=tempanswer + ",";
 					valid = true;
