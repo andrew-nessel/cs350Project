@@ -2,7 +2,7 @@ package cs350Project;
 
 import java.util.Scanner;
 
-public class IOHandler {
+public class IOHandler { //This object handles user input and display
 	
 	Scanner reader;
 
@@ -66,7 +66,5 @@ public class IOHandler {
 		
 		return result;
 	}
-	
-	//public boolean continue
 	
 }

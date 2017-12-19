@@ -3,7 +3,8 @@ package cs350Project;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Context implements Serializable {
+public class Context implements Serializable { //this context object holds information about 
+													//what the user has previously saved and loaded and other environment info
 	
 	ArrayList<String> TestFileList;
 	ArrayList<String> SurveyFileList;

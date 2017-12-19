@@ -24,15 +24,16 @@ public class RankQuestion extends Question implements Serializable{
 			while(!valid) {
 
 				int more = handler.getIntInput("Would you like to add another answer to this question? \n 1: Yes \n 2: No");
-				handler.printNewLine();
 				if(more == 1) {
 					moreAnswers = true;
 					valid = true;
+					handler.printNewLine();
 				}else if (more == 2) {
 					moreAnswers = false;
 					valid = true;
 				}else {
 					valid = false;
+					handler.printNewLine();
 					handler.print("Please only answer either 1 or 2");
 					handler.printNewLine();
 				}
@@ -58,17 +59,20 @@ public class RankQuestion extends Question implements Serializable{
 		display(handler);
 		String answer = "";
 		int size = answerOptions.size();
+		handler.printNewLine();
 		
 		for(int x = 0; x<size; x++){
 			
 			boolean valid = false;
 			while(!valid) {
-				String tempanswer = answer + handler.getStringInput("Rank " + x+1);
-				if(validateAnswer(answer)) {
-					answer+=tempanswer + ",";
+				String tempanswer = answer + handler.getStringInput("Rank " + (x+1)).toUpperCase();
+				handler.printNewLine();
+				if(validateAnswer(tempanswer)) {
+					answer=tempanswer + ",";
 					valid = true;
 				}else {
 					handler.print("Answer not valid, please only input the letter (ex. a) . Please try again");
+					handler.printNewLine();
 				}
 			}			
 		}

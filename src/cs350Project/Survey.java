@@ -3,8 +3,9 @@ package cs350Project;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Survey implements Serializable{
-	
+public class Survey implements Serializable{ //A survey holds its name, its questions and its results
+												//it has each question handle the specifics of each question and 
+												//the survey just handles the overarching work of housing all the questions together
 	protected ArrayList<Question> questions;
 	protected String surveyName;
 	protected SurveyResults surveyResults;
@@ -38,10 +39,10 @@ public class Survey implements Serializable{
 		while(!valid) {
 
 			int more = handler.getIntInput("Would you like to add a question? \n1: Yes \n2: No ");
-			handler.printNewLine();
 			switch(more) {
 			
 				case 1:
+					handler.printNewLine();
 					addQuestion(makeQuestion(handler));
 					handler.printNewLine();
 					valid = false;
@@ -49,9 +50,11 @@ public class Survey implements Serializable{
 					
 				case 2:
 					valid = true;
+					handler.printNewLine();
 					break;
 					
 				default:
+					handler.printNewLine();
 					handler.print("Invalid answer. Please try again");
 					handler.printNewLine();
 					valid = false;
@@ -122,7 +125,6 @@ public class Survey implements Serializable{
 					break;
 			}
 		}
-		
 		return question;
 	}
 	
@@ -133,7 +135,7 @@ public class Survey implements Serializable{
 		
 		for(int x = 0; x < questions.size(); x++) {
 			Question question = questions.get(x);
-			handler.print(x+". ");
+			handler.print((x+1) + ". ");
 			question.display(handler);
 			handler.printNewLine();
 		}

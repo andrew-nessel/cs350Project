@@ -13,7 +13,7 @@ public class Driver {
 	public static Survey survey = null;
 	public static Context context = null;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) { //display the opening menu which dictates whether the user wants a test or survey
 		
 		initialize();
 		
@@ -48,7 +48,7 @@ public class Driver {
 
 	}
 	
-	public static void makeSurvey() {
+	public static void makeSurvey() {//display the menu and then create/display/load/save survey based on user input
 		
 		boolean valid = false;
 		
@@ -79,7 +79,7 @@ public class Driver {
 				case 2:
 					if(survey == null) {
 						handle.print("You haven't loaded or created a survey to be displayed");
-						handle.printNewLine();
+						handle.printNewLines(2);
 					}else {
 						survey.display(handle);
 					}
@@ -95,19 +95,19 @@ public class Driver {
 			
 				case 5:
 					valid = true;
+					survey = null;
 					break;
 				
 				default:
 					handle.print("Invalid answer. Please try again");
-					handle.printNewLine();
+					handle.printNewLines(2);
 					break;
 			}
 			
-			handle.printNewLine();
 		}
 	}
 	
-	public static void makeTest() {
+	public static void makeTest() { //display the menu and then create/display/load/save test based on user input
 		
 		boolean valid = false;
 		
@@ -138,7 +138,7 @@ public class Driver {
 				case 2:
 					if(survey == null) {
 						handle.print("You haven't loaded or created a test to be displayed");
-						handle.printNewLine();
+						handle.printNewLines(2);
 					}else {
 						survey.display(handle);
 					}
@@ -154,141 +154,144 @@ public class Driver {
 			
 				case 5:
 					valid = true;
+					survey = null;
 					break;
 				
 				default:
 					handle.print("Invalid answer. Please try again");
-					handle.printNewLine();
+					handle.printNewLines(2);
 					break;
 			}
-			handle.printNewLine();
 		}
-		
-		handle.printNewLine();
 	}
 	
 	public static void loadSurvey() {
 
         boolean valid = false;
         
-        if(context.getSurveyList().isEmpty()) {
+        if(context.getSurveyList().isEmpty()) {//if we've never created/saved a survey we can load any
         	handle.print("You don't have any surveys to load");
+        	handle.printNewLines(2);
         	return;
         }
         
-        handle.print("Surveys found:");
+        handle.print("Surveys found:"); //display the surveys that we have saved
         for(String surveyName : context.getSurveyList()) {
-        	handle.print(surveyName);
         	handle.printNewLine();
+        	handle.print(surveyName);
         }
-        handle.printNewLine();
+        handle.printNewLines(2);
         
 		String filename = handle.getStringInput("Please input the name of the survey you would like to load");
+		handle.printNewLine();
         
-        while(!valid) {
+        while(!valid) { //ask the user which test to load and then load it from the appropriate file
         	try {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
                 survey = (Survey) in.readObject();
                 in.close();
     			valid = true;
     		} catch (FileNotFoundException e1) {
-    			handle.getStringInput("File not found, please try again");
+    			filename = handle.getStringInput("File not found, please try again");
+    			handle.printNewLine();
     		} catch (IOException e1) {
-    			handle.getStringInput("Something went wrong (IOException), please try again");
+    			handle.print("Something went wrong (IOException), please try again");
+        		handle.printNewLine();
     			return;
     		} catch (ClassNotFoundException e) {
-    			handle.getStringInput("Something went wrong (ClassNotFound), please try again");
+    			handle.print("Something went wrong (ClassNotFound), please try again");
+        		handle.printNewLine();
     			return;
 			}
         }
 	}
 	
-	public static void saveSurvey() {
-		
-        boolean valid = false;
+	public static void saveSurvey() { //save the current survey
         
         if(survey == null) {
-        	handle.print("No Survey to save, either load or create one to save");
+        	handle.print("No survey to save, either load or create one to save");
         	return;
         }
         
-        while(!valid) {
-        	try {
-                ObjectOutputStream oos;
-    			oos = new ObjectOutputStream(new FileOutputStream(survey.getName()));
-    			oos.writeObject( survey );
-    			oos.close();
-    			context.addSurvey(survey.getName());
-    			valid = true;
-    		} catch (IOException e1) {
-    			handle.getStringInput("Something went wrong (IOException), please try again");
-    			return;
-    		}
-        }
+        try {
+        	ObjectOutputStream oos;
+    		oos = new ObjectOutputStream(new FileOutputStream(survey.getName()));
+    		oos.writeObject( survey );
+    		oos.close();
+    		context.addSurvey(survey.getName());
+    		handle.print("Survey saved");
+    		handle.printNewLines(2);
+    	} catch (IOException e1) {
+    		handle.print("Something went wrong (IOException), please try again");
+    		handle.printNewLine();
+    		return;
+    	}
 	}
 	
-	public static void loadTest() {
+	public static void loadTest() { 
 
         boolean valid = false;
         
-        if(context.getTestList().isEmpty()) {
+        if(context.getTestList().isEmpty()) {//if we've never created/saved a test we can load any
         	handle.print("You don't have any tests to load");
+        	handle.printNewLines(2);
         	return;
         }
         
-        handle.print("Tests found:");
-        handle.printNewLine();
-        for(String surveyName : context.getTestList()) {
-        	handle.print(surveyName);
+        handle.print("Tests found:"); //display the tests we've saved
+        for(String surveyName : context.getTestList()) { 
         	handle.printNewLine();
+        	handle.print(surveyName);
         }
-        handle.printNewLine();
+        handle.printNewLines(2);
         
 		String filename = handle.getStringInput("Please input the name of the test you would like to load");
+		handle.printNewLine();
         
-        while(!valid) {
+        while(!valid) { //ask the user which test to load and then load it from the appropriate file
         	try {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
                 survey = (TestSurvey) in.readObject();
                 in.close();
     			valid = true;
     		} catch (FileNotFoundException e1) {
-    			handle.getStringInput("File not found, please try again");
+    			filename = handle.getStringInput("File not found, please try again");
+    			handle.printNewLine();
     		} catch (IOException e1) {
-    			handle.getStringInput("Something went wrong (IOException), please try again");
+    			handle.print("Something went wrong (IOException), please try again");
+        		handle.printNewLine();
     			return;
     		} catch (ClassNotFoundException e) {
-    			handle.getStringInput("Something went wrong (ClassNotFound), please try again");
+    			handle.print("Something went wrong (ClassNotFound), please try again");
+        		handle.printNewLine();
     			return;
 			}
         }
 	}
 	
-	public static void saveTest() {
+	public static void saveTest() {//serialize and save the current test
 		
-        boolean valid = false;
-        
         if(survey == null) {
         	handle.print("No test to save, either load or create one to save");
         	return;
         }
         
-        while(!valid) {
-        	try {
-                ObjectOutputStream oos;
-    			oos = new ObjectOutputStream(new FileOutputStream(survey.getName()));
-    			oos.writeObject( survey );
-    			oos.close();
-    			context.addSurvey(survey.getName());
-    			valid = true;
-    		} catch (IOException e1) {
-    			handle.getStringInput("Something went wrong (IOException), please try again");
-    			return;
-    		}
-        }
+        try {
+        	ObjectOutputStream oos;
+    		oos = new ObjectOutputStream(new FileOutputStream(survey.getName()));
+    		oos.writeObject( survey );
+    		oos.close();
+    		context.addTest(survey.getName());
+    		handle.print("Test saved");
+    		handle.printNewLines(2);
+    	} catch (IOException e1) {
+    		handle.print("Something went wrong (IOException), please try again");
+    		handle.printNewLine();
+    		return;
+    	}
 	}
 	
-	public static void initialize() {
+	public static void initialize() { //this creates/loads the context file which keeps a record of the available tests and surveys to load
 		
 		Context instance = new Context();
         
@@ -299,21 +302,24 @@ public class Driver {
     	} catch (FileNotFoundException e1) {
     			//There is no context (first launch) so we'll just use the new instance
     	} catch (IOException e1) {
-    			handle.getStringInput("Something went wrong initializing (IOException)");
+    			handle.print("Something went wrong initializing (IOException)");
+        		handle.printNewLine();
     	} catch (ClassNotFoundException e) {
-    			handle.getStringInput("Something went wrong initializing (ClassNotFound)");
+    			handle.print("Something went wrong initializing (ClassNotFound)");
+        		handle.printNewLine();
 		}
         context = instance;
 	}
 	
-	public static void finish() {
+	public static void finish() {//before the program closes it calls this to save the context file
 		ObjectOutputStream oos;
         try {
     		oos = new ObjectOutputStream(new FileOutputStream("context"));
     		oos.writeObject( context );
     		oos.close();
     	} catch (IOException e1) {
-    		handle.getStringInput("Something went wrong finishing (IOException)");
+    		handle.print("Something went wrong finishing (IOException)");
+    		handle.printNewLine();
     		return;
     	}
     }

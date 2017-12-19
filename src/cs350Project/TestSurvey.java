@@ -3,8 +3,9 @@ package cs350Project;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TestSurvey extends Survey implements Serializable{
-	
+public class TestSurvey extends Survey implements Serializable{//A test holds its name, its questions and its results
+																//it has each question handle the specifics of each question and 
+																//the test just handles the overarching work of housing all the questions together
 	protected ArrayList<String> answerKey;
 
 	public TestSurvey(String name) {
@@ -20,15 +21,15 @@ public class TestSurvey extends Survey implements Serializable{
 		while(!valid) {
 
 			int more = handler.getIntInput("Would you like to add a question? \n1: Yes \n2: No ");
-			handler.printNewLine();
 			switch(more) {
 			
 				case 1:
+					handler.printNewLine();
 					Question q = makeQuestion(handler);
 					addQuestion(q);
 					if(q.hasCorrectAnswer()) {
-						handler.print("Please now answer this question with the correct answer");
 						handler.printNewLine();
+						handler.print("Please now answer this question with the correct answer");
 						answerKey.add(q.answer(handler));
 					}else {
 						answerKey.add("");
@@ -38,10 +39,12 @@ public class TestSurvey extends Survey implements Serializable{
 					break;
 					
 				case 2:
+					handler.printNewLine();
 					valid = true;
 					break;
 					
 				default:
+					handler.printNewLine();
 					handler.print("Invalid answer. Please try again");
 					handler.printNewLine();
 					valid = false;
@@ -123,12 +126,12 @@ public class TestSurvey extends Survey implements Serializable{
 		
 		for(int x = 0; x < questions.size(); x++) {
 			Question question = questions.get(x);
-			handler.print(x+". ");
+			handler.print((x+1) + ". ");
 			question.display(handler);
 			if(question.hasCorrectAnswer()) {
 				handler.print("Correct answer is " + answerKey.get(x));				
 			}
-			handler.printNewLine();
+			handler.printNewLines(2);
 		}
 	}
 	

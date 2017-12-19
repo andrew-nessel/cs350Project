@@ -14,18 +14,19 @@ public class MatchQuestion extends Question implements Serializable{
 	
 	public void build(IOHandler handler) { 
 		
-		questionWording = handler.getStringInput("Please input the wording for this matching question: ");	
+		questionWording = handler.getStringInput("Please input the wording for this matching question");	
+		handler.printNewLine();
 		
 		boolean moreAnswers = true;
 		while(moreAnswers) {
 			
-			answerOptions.add(handler.getStringInput("Please enter an answer in the first column: "));
+			answerOptions.add(handler.getStringInput("Please enter an answer in the first column"));
 			handler.printNewLine();
 			
 			boolean valid = false;
 			while(!valid) {
 
-				int more = handler.getIntInput("Would you like to add another answer to the first column of this question? \n 1: Yes \n 2: No \n : ");
+				int more = handler.getIntInput("Would you like to add another answer to the first column of this question? \n 1. Yes \n 2. No");
 				handler.printNewLine();
 				if(more == 1) {
 					moreAnswers = true;
@@ -44,13 +45,13 @@ public class MatchQuestion extends Question implements Serializable{
 		moreAnswers = true;
 		while(moreAnswers) {
 			
-			answerOptionsColumn2.add(handler.getStringInput("Please enter an answer in the second column: "));
+			answerOptionsColumn2.add(handler.getStringInput("Please enter an answer in the second column"));
 			handler.printNewLine();
 			
 			boolean valid = false;
 			while(!valid) {
 
-				int more = handler.getIntInput("Would you like to add another answer to the second column of this question? \n 1: Yes \n 2: No \n : ");
+				int more = handler.getIntInput("Would you like to add another answer to the second column of this question? \n 1. Yes \n 2. No ");
 				handler.printNewLine();
 				if(more == 1) {
 					moreAnswers = true;
@@ -75,7 +76,7 @@ public class MatchQuestion extends Question implements Serializable{
 		int c1size = answerOptions.size();
 		
 		for(int x = 0; x < answerOptions.size(); x++) {
-			handler.print(intToLetter(x) + ". " + answerOptions.get(x) + "\t" + intToLetter(x+c1size-1) + ". " + answerOptionsColumn2.get(x));
+			handler.print(intToLetter(x) + ". " + answerOptions.get(x) + "     " + intToLetter(x+c1size) + ". " + answerOptionsColumn2.get(x));
 			handler.printNewLine();
 		}
 	}
@@ -91,8 +92,8 @@ public class MatchQuestion extends Question implements Serializable{
 			boolean valid = false;
 			while(!valid) {
 				String tempanswer1 = intToLetter(x);
-				String tempanswer2 = handler.getStringInput(tempanswer1 + " matches with");
-				answer+=tempanswer1 + " " + tempanswer2 + ",";
+				String tempanswer2 = handler.getStringInput(tempanswer1 + " matches with").toUpperCase();
+				answer+=tempanswer1 + "-" + tempanswer2 + ",";
 				
 				if(validateAnswer(answer)) {
 					valid = true;
@@ -119,7 +120,7 @@ public class MatchQuestion extends Question implements Serializable{
 		int c2size = answerOptionsColumn2.size();
 			
 		for(String input : list) {
-			String[] column = input.split(" ");
+			String[] column = input.split("-");
 			
 			if(column.length != 2) {
 				return false;

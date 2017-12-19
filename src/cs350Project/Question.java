@@ -3,7 +3,10 @@ package cs350Project;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Question implements Serializable {
+public abstract class Question implements Serializable { //the abstract class of a question
+															//this has the methods that allow the survey/test classes
+															//to easily create, display, answer, etc. while letting the question 
+															//handle the specifics of how each kind of question operates
 
 		protected String questionWording;
 		protected ArrayList<String> answerOptions;
@@ -21,7 +24,8 @@ public abstract class Question implements Serializable {
 		public abstract boolean hasCorrectAnswer();
 		
 		
-	public String intToLetter(int i) { //inb4 realizing I could've used unicode
+	public String intToLetter(int i) { //this method is for easily translating numbers to letters for formatting 
+										//inb4 realizing I could've used unicode
 			switch(i) {
 			
 			case 0:
@@ -77,8 +81,8 @@ public abstract class Question implements Serializable {
 			case 25:
 				return "Z";				
 			default:
-				if(i>25) {
-					int prefix = i/26;
+				if(i>25) { //this is here so if the number is higher than 25 than we need to move to double letters Y, Z, AA, AB, etc.
+					int prefix = i/26-1;
 					int suffix = i%26;
 					return intToLetter(prefix) + intToLetter(suffix);
 				}else {

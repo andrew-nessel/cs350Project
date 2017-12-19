@@ -11,28 +11,29 @@ public class MultipleChoiceQuestion extends Question implements Serializable{
 	
 	public void build(IOHandler handler) {
 		
-		questionWording = handler.getStringInput("Please input the wording for this multiple choice question: ");
+		questionWording = handler.getStringInput("Please input the wording for this multiple choice question");
 		handler.printNewLine();
 		
 		boolean moreAnswers = true;
 		while(moreAnswers) {
 			
-			answerOptions.add(handler.getStringInput("Please enter an answer: "));
+			answerOptions.add(handler.getStringInput("Please enter an answer"));
 			handler.printNewLine();
 			
 			boolean valid = false;
 			while(!valid) {
-
-				int more = handler.getIntInput("Would you like to add another answer to this question? \n 1: Yes \n 2: No ");
-				handler.printNewLine();
+				
+				int more = handler.getIntInput("Would you like to add another answer to this question? \n 1. Yes \n 2. No ");
 				if(more == 1) {
 					moreAnswers = true;
 					valid = true;
+					handler.printNewLine();
 				}else if (more == 2) {
 					moreAnswers = false;
 					valid = true;
 				}else {
 					valid = false;
+					handler.printNewLine();
 					handler.print("Please only answer either 1 or 2");
 					handler.printNewLine();
 				}
@@ -58,14 +59,16 @@ public class MultipleChoiceQuestion extends Question implements Serializable{
 		display(handler);
 		String answer = "";
 		boolean multi = true;
+		handler.printNewLine();
 		
 		while(multi) {
 			
 			boolean valid = false;
 			while(!valid) {
-				String tempanswer = answer + handler.getStringInput("");
+				String tempanswer = answer + handler.getStringInput("").toUpperCase();
+				handler.printNewLine();
 				if(validateAnswer(tempanswer)) {
-					answer+=tempanswer + ",";
+					answer=tempanswer + ",";
 					valid = true;
 				}else {
 					handler.print("Answer not valid, please only input the letter (ex. a) . Please try again");
@@ -75,7 +78,7 @@ public class MultipleChoiceQuestion extends Question implements Serializable{
 			valid = false;
 			while(!valid) {
 
-				int more = handler.getIntInput("Would you like to add another answer to this question? \n 1: Yes \n 2: No ");
+				int more = handler.getIntInput("Would you like to add another answer to this question? \n 1. Yes \n 2. No ");
 				handler.printNewLine();
 				if(more == 1) {
 					multi = true;
