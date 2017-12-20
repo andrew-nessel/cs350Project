@@ -46,6 +46,34 @@ public class TrueFalseQuestion extends Question implements Serializable{
 		return answer;
 	}
 	
+	public void modify(IOHandler handler) {
+		
+		display(handler);
+		
+		boolean valid = false;
+		
+		while(!valid) {
+			int modify = handler.getIntInput("Would you like to modify the question wording? \n1. Yes\n2. No");
+			handler.printNewLine();
+			
+			switch (modify) {
+			case 1:
+				questionWording = handler.getStringInput("Please input the new wording for this question: ");	
+				valid = true;
+				break;
+			case 2:
+				valid = true;
+				break;
+			default:
+				valid = false;
+				handler.print("Invalid input, please try again");
+				handler.printNewLine();
+				break;
+					
+			}
+		}
+	}
+	
 	public boolean validateAnswer(String answer) {
 		
 		if(answer.toLowerCase().equals("t") || answer.toLowerCase().equals("f")) {

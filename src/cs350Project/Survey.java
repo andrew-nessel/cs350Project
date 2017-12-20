@@ -140,5 +140,49 @@ public class Survey implements Serializable{ //A survey holds its name, its ques
 			handler.printNewLine();
 		}
 	}
+	
+	public void modify(IOHandler handler) {
+
+		display(handler);
+		
+		boolean valid = false;
+		
+		while(!valid) {
+
+			int more = handler.getIntInput("Would you like to modify a question? \n1: Yes \n2: No ");
+			switch(more) {
+			
+				case 1:
+					handler.printNewLine();
+					boolean correctInput = false;
+					while(!correctInput) {
+						int q = handler.getIntInput("Which question would you like to modify?");
+						if((q>=0) || (q<questions.size())) {
+							Question question = questions.get(q);
+							question.modify(handler);
+						}else {
+							handler.print("Invalid input, please try again");
+							handler.printNewLine();
+							correctInput = false;
+						}
+					}
+					handler.printNewLine();
+					valid = false;
+					break;
+					
+				case 2:
+					valid = true;
+					handler.printNewLine();
+					break;
+					
+				default:
+					handler.printNewLine();
+					handler.print("Invalid answer. Please try again");
+					handler.printNewLine();
+					valid = false;
+					break;
+			}
+		}
+	}
 
 }

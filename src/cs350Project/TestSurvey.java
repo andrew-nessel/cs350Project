@@ -135,4 +135,76 @@ public class TestSurvey extends Survey implements Serializable{//A test holds it
 		}
 	}
 	
+	public void modify(IOHandler handler) {
+
+		display(handler);
+		
+		boolean valid = false;
+		
+		while(!valid) {
+
+			int more = handler.getIntInput("Would you like to modify a question? \n1: Yes \n2: No ");
+			switch(more) {
+			
+				case 1:
+					handler.printNewLine();
+					boolean correctInput = false;
+					while(!correctInput) {
+						int q = handler.getIntInput("Which question would you like to modify?");
+						if((q>=0) || (q<questions.size())) {
+							Question question = questions.get(q);
+							question.modify(handler);
+							if(question.hasCorrectAnswer()) {
+								boolean notCorrectAnswer = false;
+								while(!notCorrectAnswer) {
+									int change = handler.getIntInput("Would you like to modify the answer to this question? \n1: Yes \n2: No ");
+									switch(change) {
+									
+										case 1:
+											handler.printNewLine();
+											handler.print("Please now answer this question with the correct answer");
+											answerKey.add(question.answer(handler));
+											handler.printNewLine();
+											notCorrectAnswer = false;
+											break;
+											
+										case 2:
+											notCorrectAnswer = true;
+											handler.printNewLine();
+											break;
+											
+										default:
+											handler.printNewLine();
+											handler.print("Invalid answer. Please try again");
+											handler.printNewLine();
+											notCorrectAnswer = false;
+											break;
+									}
+								}
+							}
+						}else {
+							handler.print("Invalid input, please try again");
+							handler.printNewLine();
+							correctInput = false;
+						}
+					}
+					handler.printNewLine();
+					valid = false;
+					break;
+					
+				case 2:
+					valid = true;
+					handler.printNewLine();
+					break;
+					
+				default:
+					handler.printNewLine();
+					handler.print("Invalid answer. Please try again");
+					handler.printNewLine();
+					valid = false;
+					break;
+			}
+		}
+	}
+	
 }

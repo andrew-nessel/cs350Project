@@ -19,7 +19,8 @@ public abstract class Question implements Serializable { //the abstract class of
 		
 		public abstract void build(IOHandler handler);
 		public abstract void display(IOHandler handler);
-		public abstract String answer(IOHandler handler);	
+		public abstract String answer(IOHandler handler);
+		public abstract void modify(IOHandler handler);
 		public abstract boolean validateAnswer(String answer);
 		public abstract boolean hasCorrectAnswer();
 		

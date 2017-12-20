@@ -100,6 +100,71 @@ public class MultipleChoiceQuestion extends Question implements Serializable{
 		return answer;
 	}
 	
+	public void modify(IOHandler handler) {
+		
+		display(handler);
+		
+		boolean valid = false;
+		
+		while(!valid) {
+			int modify = handler.getIntInput("Would you like to modify the question wording? \n1. Yes\n2. No");
+			handler.printNewLine();
+			
+			switch (modify) {
+			case 1:
+				questionWording = handler.getStringInput("Please input the new wording for this question: ");	
+				break;
+			case 2:
+				valid = true;
+				break;
+			default:
+				valid = false;
+				handler.print("Invalid input, please try again");
+				handler.printNewLine();
+				break;
+					
+			}
+		}
+		
+		valid = false;
+		
+		while(!valid) {
+			int modify = handler.getIntInput("Would you like to modify one of the choices? \n1. Yes\n2. No");
+			handler.printNewLine();
+			
+			switch (modify) {
+			case 1:
+				boolean correctChoice = false;
+				while(!correctChoice) {
+					display(handler);
+					String answer = handler.getStringInput("Enter the choice you want to modify");
+					int choice = letterToInt(answer);
+					
+					if((choice>=0) || (choice<answerOptions.size())) {
+						answerOptions.set(choice, handler.getStringInput("Please enter the replacement choice"));
+						handler.printNewLine();
+						correctChoice = true;
+					}else {
+						handler.print("That choice is invalid, please try again");
+						handler.printNewLine();
+						correctChoice =false;
+					}
+				}
+				valid = false;
+				break;
+			case 2:
+				valid = true;
+				break;
+			default:
+				valid = false;
+				handler.print("Invalid input, please try again");
+				handler.printNewLine();
+				break;
+					
+			}
+		}
+	}
+	
 	public boolean validateAnswer(String answer) {
 		
 		String[] list = answer.split(",");
